@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:36:25 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/02/25 09:29:40 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/02 08:02:45 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv)
 	}
 	printf("Thread 1 has fineshed\n");
 	printf("Main: Number of dice = %d\n", *res);
+	free(res);
 	pthread_mutex_destroy(&mutex);
 	gettimeofday(&tv2, NULL);
 	printf("time to process = %d\n", (int)(tv2.tv_usec - tv1.tv_usec));
