@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:32 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/02 18:58:20 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/05 16:27:24 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,38 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
+# include <sys/time.h>
+
+typedef struct s_fork{
+	int				id;
+	pthread_mutex_t	f_mutex;
+}	t_fork;
 
 typedef struct s_philo{
-	long long		l_eat_time;
+	int				id;
+	long long		last_eat_time;
 	int				eat_count;
-	long long		init_time;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*r_fork;
+	pthread_t		th_philo;
+	t_fork			*l_fork;
+	t_fork			*r_fork;
+	struct s_data	*data;
 }	t_philo;
+
+typedef struct s_data{
+	int			num_philos;
+	int			t_to_die;
+	int			t_to_eat;
+	int			t_to_sleep;
+	long long	init_time;
+	int			num_eat;
+	pthread_t	th_starve;
+	t_philo		*philos;
+	t_fork		*forks;
+}	t_data;
+
+int			ft_atoi(const char *nptr);
+int			init(t_data *data, int argc, char **argv);
+long long	get_time(void);
 
 #endif
