@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:56:12 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/05 16:38:35 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/07 09:25:32 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int	init(t_data *data, int argc, char **argv)
 	data->t_to_eat = ft_atoi(argv[3]);
 	data->t_to_sleep = ft_atoi(argv[4]);
 	data->init_time = 0;
+	data->everyone_ate = 0;
+	data->someone_died = 0;
 	data->num_eat = INT_MAX;
+	pthread_mutex_init(&data->stdout, NULL);
 	if (argc == 6)
 		data->num_eat = ft_atoi(argv[5]);
 	if (check_args_limits(data))

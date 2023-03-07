@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:32 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/05 16:27:24 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/07 09:56:38 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,18 @@ typedef struct s_philo{
 }	t_philo;
 
 typedef struct s_data{
-	int			num_philos;
-	int			t_to_die;
-	int			t_to_eat;
-	int			t_to_sleep;
-	long long	init_time;
-	int			num_eat;
-	pthread_t	th_starve;
-	t_philo		*philos;
-	t_fork		*forks;
+	int				num_philos;
+	int				t_to_die;
+	int				t_to_eat;
+	int				t_to_sleep;
+	long long		init_time;
+	int				num_eat;
+	int				someone_died;
+	int				everyone_ate;
+	pthread_mutex_t	stdout;
+	pthread_t		th_starve;
+	t_philo			*philos;
+	t_fork			*forks;
 }	t_data;
 
 int			ft_atoi(const char *nptr);
