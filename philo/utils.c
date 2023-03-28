@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:38:39 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/05 16:38:36 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:53:26 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	ft_isspace(const char *str, int *i)
 
 int	ft_atoi(const char *nptr)
 {
-	int		i;
-	int		sign;
+	int	i;
+	int	sign;
 	int	res;
 
 	res = 0;

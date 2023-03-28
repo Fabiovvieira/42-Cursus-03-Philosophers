@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:16:53 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/07 09:56:37 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:53:33 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 void	free_all(t_data *data)
 {
+	int	i;
+
+	i = 0;
+	while (i < data->num_philos)
+	{
+		pthread_mutex_destroy(&data->forks[i].f_mutex);
+		i++;
+	}
 	free(data->forks);
 	free(data->philos);
 	free(data);
@@ -29,6 +37,47 @@ void	print(t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->data->stdout);
 }
 
+int	take_fork(t_philo *philo)
+{
+	if (philo->data->everyone_ate || philo->data->someone_died)
+		return (1);
+	pthread_mutex_lock(&philo->r_fork->f_mutex);
+	print(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->l_fork->f_mutex);
+	print(philo, "has taken a fork");
+	return (0);
+}
+
+int	eating(t_philo *philo)
+{
+	if (philo->data->everyone_ate || philo->data->someone_died)
+		return (1);
+	print(philo, "is eating");
+	philo->last_eat_time = get_time();
+	usleep(philo->data->t_to_eat * 1000);
+	philo->eat_count++;
+	pthread_mutex_unlock(&philo->r_fork->f_mutex);
+	pthread_mutex_unlock(&philo->l_fork->f_mutex);
+	return (0);
+}
+
+int	sleeping(t_philo *philo)
+{
+	if (philo->data->everyone_ate || philo->data->someone_died)
+		return (1);
+	print(philo, "is sleeping");
+	usleep(philo->data->t_to_sleep * 1000);
+	return (0);
+}
+
+int	thinking(t_philo *philo)
+{
+	if (philo->data->everyone_ate || philo->data->someone_died)
+		return (1);
+	print(philo, "is thinking");
+	return (0);
+}
+
 void	*philosopher(void *data)
 {
 	t_philo	*philo;
@@ -38,52 +87,14 @@ void	*philosopher(void *data)
 		usleep(2000);
 	while (1)
 	{
-		if (philo->data->everyone_ate || philo->data->someone_died)
-		{
-			// printf("someone died or everyone has eaten!\n");
+		if (take_fork(philo))
 			break ;
-		}
-		// Lock the right fork
-		pthread_mutex_lock(&philo->r_fork->f_mutex);
-		print(philo, "has taken a fork");
-
-		// Lock the left fork
-		pthread_mutex_lock(&philo->l_fork->f_mutex);
-		print(philo, "has taken a fork");
-
-		if (philo->data->everyone_ate || philo->data->someone_died)
-		{
-			pthread_mutex_unlock(&philo->r_fork->f_mutex);
-			pthread_mutex_unlock(&philo->l_fork->f_mutex);
-			// printf("someone died or everyone has eaten!\n");
+		if (eating(philo))
 			break ;
-		}
-		// Philosopher is eating
-		print(philo, "is eating");
-		philo->last_eat_time = get_time();
-		usleep(philo->data->t_to_eat * 1000);
-		philo->eat_count++;
-
-		// Put down the forks
-		pthread_mutex_unlock(&philo->r_fork->f_mutex);
-		pthread_mutex_unlock(&philo->l_fork->f_mutex);
-
-		if (philo->data->everyone_ate || philo->data->someone_died)
-		{
-			// printf("someone died or everyone has eaten!\n");
+		if (sleeping(philo))
 			break ;
-		}
-		// Philosopher is sleeping
-		print(philo, "is sleeping");
-		usleep(philo->data->t_to_sleep * 1000);
-
-		if (philo->data->everyone_ate || philo->data->someone_died)
-		{
-			// printf("someone died or everyone has eaten!\n");
+		if (thinking(philo))
 			break ;
-		}
-		// Philosopher is thinking
-		print(philo, "is thinking");
 	}
 	return (NULL);
 }
@@ -128,7 +139,7 @@ int	simulation(t_data *data)
 	while (i < data->num_philos)
 	{
 		data->philos[i].last_eat_time = get_time();
-		if(pthread_create(&data->philos[i].th_philo, NULL, &philosopher, &data->philos[i]) != 0)
+		if (pthread_create(&data->philos[i].th_philo, NULL, &philosopher, &data->philos[i]) != 0)
 		{
 			printf("Error creating philosopher!\n");
 			return (1);

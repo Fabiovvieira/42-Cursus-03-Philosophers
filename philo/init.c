@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:56:12 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/07 09:25:32 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/28 16:53:32 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	init_philo(t_data *data)
 
 int	init(t_data *data, int argc, char **argv)
 {
-	if(argc != 5 && argc != 6)
+	if (argc != 5 && argc != 6)
 		return (1);
 	data->num_philos = ft_atoi(argv[1]);
 	data->t_to_die = ft_atoi(argv[2]);
