@@ -6,7 +6,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRCS = main.c \
 		utils.c \
-		init.c
+		init.c \
+		philos.c
 
 LTHREAD = -pthread
 

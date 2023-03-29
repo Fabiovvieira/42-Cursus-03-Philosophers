@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:56:12 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/28 16:53:32 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/29 08:50:16 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,29 @@ static int	init_philo(t_data *data)
 	int	i;
 
 	i = 0;
-	data->philos = malloc(sizeof(t_philo) * data->num_philos);
+	data->phi = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->forks)
 		return (1);
 	while (i < data->num_philos)
 	{
-		data->philos[i].id = i + 1;
-		data->philos[i].last_eat_time = 0;
-		data->philos[i].eat_count = 0;
-		data->philos[i].data = data;
-		data->philos[i].l_fork = &data->forks[(i + 1) % data->num_philos];
-		data->philos[i].r_fork = &data->forks[i];
+		data->phi[i].id = i + 1;
+		data->phi[i].last_eat_time = 0;
+		data->phi[i].eat_count = 0;
+		data->phi[i].data = data;
+		data->phi[i].l_fork = &data->forks[(i + 1) % data->num_philos];
+		data->phi[i].r_fork = &data->forks[i];
 		if (data->num_philos == 1)
 		{
-			data->philos[i].l_fork = &data->forks[i];
-			data->philos[i].r_fork = &data->forks[i];
+			data->phi[i].l_fork = &data->forks[i];
+			data->phi[i].r_fork = &data->forks[i];
 		}
 		i++;
 	}
 	return (0);
 }
 
-int	init(t_data *data, int argc, char **argv)
+void	init_data(t_data *data, char **argv)
 {
-	if (argc != 5 && argc != 6)
-		return (1);
 	data->num_philos = ft_atoi(argv[1]);
 	data->t_to_die = ft_atoi(argv[2]);
 	data->t_to_eat = ft_atoi(argv[3]);
@@ -82,6 +80,13 @@ int	init(t_data *data, int argc, char **argv)
 	data->everyone_ate = 0;
 	data->someone_died = 0;
 	data->num_eat = INT_MAX;
+}
+
+int	init(t_data *data, int argc, char **argv)
+{
+	if (argc != 5 && argc != 6)
+		return (1);
+	init_data(data, argv);
 	pthread_mutex_init(&data->stdout, NULL);
 	if (argc == 6)
 		data->num_eat = ft_atoi(argv[5]);
@@ -94,7 +99,7 @@ int	init(t_data *data, int argc, char **argv)
 	}
 	if (init_philo(data))
 	{
-		free(data->philos);
+		free(data->phi);
 		return (1);
 	}
 	return (0);
