@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:56:12 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/29 15:24:11 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:30:35 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static int	init_philo(t_data *data)
 		data->phi[i].data = data;
 		data->phi[i].l_fork = &data->forks[(i + 1) % data->num_philos];
 		data->phi[i].r_fork = &data->forks[i];
+		if (pthread_mutex_init(&data->phi[i].lock, NULL) != 0)
+			return (free(data->phi), 1);
 		if (data->num_philos == 1)
 		{
 			data->phi[i].l_fork = &data->forks[i];

@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:19:32 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/29 08:49:10 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:45:13 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_philo{
 	pthread_t		th_ph;
 	t_fork			*l_fork;
 	t_fork			*r_fork;
+	pthread_mutex_t	lock;
 	struct s_data	*data;
 }	t_philo;
 

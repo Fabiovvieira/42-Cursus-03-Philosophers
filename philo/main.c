@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 10:16:53 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/29 13:23:54 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/30 10:31:07 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ int	check_philos(t_data *data)
 		time_now = get_time();
 		while (++i < data->num_philos)
 		{
+			pthread_mutex_lock(&data->phi[i].lock);
 			if (time_now - data->phi[i].last_eat_time > data->t_to_die)
 			{
 				print(&data->phi[i], "died");
 				data->someone_died = 1;
-				return (1);
+				return (pthread_mutex_unlock(&data->phi[i].lock), 1);
 			}
+			pthread_mutex_unlock(&data->phi[i].lock);
 			if (data->phi[i].eat_count >= data->num_eat)
 				count++;
 		}

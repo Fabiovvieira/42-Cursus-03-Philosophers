@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 08:45:01 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/03/29 13:23:14 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:41:25 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int	take_fork(t_philo *philo)
 
 int	eating(t_philo *philo)
 {
+	pthread_mutex_lock(&philo->lock);
 	if (philo->data->everyone_ate || philo->data->someone_died)
 		return (1);
 	print(philo, "is eating");
 	philo->last_eat_time = get_time();
+	pthread_mutex_unlock(&philo->lock);
 	usleep(philo->data->t_to_eat * 1000);
 	philo->eat_count++;
 	pthread_mutex_unlock(&philo->r_fork->f_mutex);
