@@ -4,9 +4,14 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c \
-		utils.c \
-		init.c
+SRCS = main_bonus.c \
+		utils_bonus.c \
+		utils_bonus_1.c \
+		init_bonus.c \
+		philos_bonus.c \
+		threads_bonus.c \
+		free_all_bonus.c
+
 
 LTHREAD = -pthread
 

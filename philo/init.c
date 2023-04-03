@@ -50,7 +50,7 @@ static int	init_philo(t_data *data)
 
 	i = 0;
 	data->phi = malloc(sizeof(t_philo) * data->num_philos);
-	if (!data->forks)
+	if (!data->phi)
 		return (1);
 	while (i < data->num_philos)
 	{
