@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 21:56:12 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/04/03 20:22:34 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:16:25 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	init_semaphore(t_data *data)
 	data->all_ate = sem_open("all_ate", O_CREAT, 0644, 0);
 	data->one_died = sem_open("one_died", O_CREAT, 0644, 0);
 	data->print_out = sem_open("print_out", O_CREAT, 0644, 1);
-	data->finish = sem_open("print_out", O_CREAT, 0644, 1);
+	data->finish = sem_open("finish", O_CREAT, 0644, 1);
 }
 
 int	init(t_data *data, int argc, char **argv)

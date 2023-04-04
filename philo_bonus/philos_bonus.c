@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 08:45:01 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/04/03 20:17:28 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:13:34 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	take_fork(t_data *data)
 {
+	usleep(100);
 	sem_wait(data->forks);
 	print(data, "has taken a fork");
+	usleep(100);
 	sem_wait(data->forks);
 	print(data, "has taken a fork");
 	return (0);

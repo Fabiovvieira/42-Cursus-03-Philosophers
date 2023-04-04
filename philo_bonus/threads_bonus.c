@@ -6,7 +6,7 @@
 /*   By: fvalli-v <fvalli-v@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 20:20:22 by fvalli-v          #+#    #+#             */
-/*   Updated: 2023/04/03 20:23:15 by fvalli-v         ###   ########.fr       */
+/*   Updated: 2023/04/04 09:17:18 by fvalli-v         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	*death_check_phi(void *arg)
 		time_now = get_time();
 		if (time_now - data->phi[data->i_philo].last_eat_time > data->t_to_die)
 		{
+			sem_wait(data->finish);
 			sem_wait(data->phi[data->i_philo].lock_death);
 			print(data, "died");
 			sem_post(data->one_died);
